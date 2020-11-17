@@ -1,8 +1,9 @@
 import React, {
 	useState,
+	useCallback,
+	useEffect,
 	ReactElement,
 	FormEvent,
-	useEffect,
 	Dispatch,
 	SetStateAction
 } from 'react'
@@ -14,35 +15,35 @@ import { addImage } from 'store/slices/artSlice'
 interface Props {
 	id: string
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string>>
 }
 
-export default function Index({ id, setLoading }: Props): ReactElement {
+export default function Index({ id, setLoading, setError }: Props): ReactElement {
 	const dispatch = useDispatch()
 	const [imageAsFile, setImageAsFile] = useState<null | File>(null)
 	// const [fileAsImage, setFileAsImage] = useState<null | string>(null)
-	const [error, setError] = useState('')
 	const handleImageAsFile = (event: FormEvent) => {
 		const target = event.target as HTMLInputElement
 		const files = target.files
 		if (files === null) return setError('no image found')
 		const file = files[0]
-		const image = URL.createObjectURL(file)
+		// const image = URL.createObjectURL(file)
 		setImageAsFile(file)
 		// setFileAsImage(image)
 	}
 
-	const handleUpload = async () => {
+	const handleUpload = useCallback(async () => {
 		setLoading(true)
 		if (imageAsFile) {
 			setLoading(true)
 			await dispatch(addImage(id, imageAsFile))
 		}
 		setLoading(false)
-	}
+	}, [imageAsFile, setLoading, dispatch, id])
 
 	useEffect(() => {
-		handleUpload()
-	}, [imageAsFile])
+		if (imageAsFile !== null) handleUpload()
+	}, [imageAsFile, handleUpload])
 
 	return (
 		<FileInputLabel>

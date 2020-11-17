@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import { useMediaQuery } from 'react-responsive'
 import Mobile from 'features/Home/Mobile'
 import Desktop from 'features/Home/Desktop'
@@ -8,9 +7,5 @@ export default function Index() {
 		query: '(max-device-width: 1224px)'
 	})
 
-	return (
-		<Container>{isTabletOrMobileDevice ? <Mobile /> : <Desktop />}</Container>
-	)
+	return <>{isTabletOrMobileDevice ? <Mobile /> : <Desktop />}</>
 }
-
-const Container = styled.div``
