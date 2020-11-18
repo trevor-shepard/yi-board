@@ -52,8 +52,8 @@ export const fetchArt = (): AppThunk => async dispatch => {
 		})
 }
 
-export const subscribeToArts = (dispatch: Dispatch<any>) => {
-	const unsubscribe = db.collection('arts').onSnapshot(querySnapshot => {
+export const subscribeToArts = (dispatch: Dispatch<any>, uid: string) => {
+	const unsubscribe = db.collection('arts').where('owner', '==', uid).onSnapshot(querySnapshot => {
 		const arts: { [id: string]: Art } = {}
 
 		querySnapshot.forEach(doc => {
@@ -70,8 +70,9 @@ export const subscribeToArts = (dispatch: Dispatch<any>) => {
 export const createArt = (
 	title: string,
 	photo: File
-): AppThunk => async dispatch => {
+): AppThunk => async (dispatch, getState) => {
 	try {
+		const { user: {uid}} = getState()
 		const ref = await db.collection('arts').doc()
 
 		const date = parseInt(moment().format('X'))
@@ -86,6 +87,8 @@ export const createArt = (
 			images: {
 				[date]: image
 			},
+			owner: uid as string,
+			observers: [],
 			id: ref.id
 		}
 

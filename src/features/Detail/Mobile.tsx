@@ -2,7 +2,15 @@ import React, { useState, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import { Art } from 'types'
 import { backArrow, nextArrow, x } from 'assets/icons'
-import { Thumb, PageTitle, ThumbList, ThumbImage, ThumbTitle, ContainerColumnRelative, ContainerFlexColumnSpaceBetween } from 'components/Styled'
+import {
+	Thumb,
+	PageTitle,
+	ThumbList,
+	ThumbImage,
+	ThumbTitle,
+	ContainerColumnRelative,
+	ContainerFlexColumnSpaceBetween
+} from 'components/Styled'
 import AddImage from 'components/AddImage'
 import { Link } from 'react-router-dom'
 interface Props {
@@ -21,27 +29,25 @@ export default function Index({
 	)
 	const Thumbs = sortedImageKeys.map((key: string, index) => (
 		<Thumb onClick={() => select(index)} key={`${title}-${key}`}>
-			<ThumbTitle>
-				{' '}
-				{index + 1}
-			</ThumbTitle>
+			<ThumbTitle> {index + 1}</ThumbTitle>
 			<ThumbImage src={images[parseInt(key)]} />
 		</Thumb>
 	))
 
-	if (loading) return (<ContainerFlexColumnSpaceBetween>
-		Loading
-	</ContainerFlexColumnSpaceBetween>)
+	if (loading)
+		return (
+			<ContainerFlexColumnSpaceBetween>Loading</ContainerFlexColumnSpaceBetween>
+		)
 
 	return selected === null ? (
 		<ContainerColumnRelative>
 			<Header>
 				<PageTitle>{title}</PageTitle>
-				<Back to='/'>
+				<Back to="/">
 					<Icon onClick={() => select(null)} src={x} />
 				</Back>
 			</Header>
-			
+
 			{error}
 			<ThumbList>{Thumbs}</ThumbList>
 			<AddImage id={id} setLoading={setLoading} setError={setError} />
@@ -52,16 +58,23 @@ export default function Index({
 				<PageTitle>{title}</PageTitle>
 				<Control>
 					<Icon onClick={() => select(null)} src={x} />
-					{selected < sortedImageKeys.length - 1 ? <Icon onClick={() => select(selected + 1)} src={nextArrow} /> : <Placeholder/>}
-					{selected > 0 ? <Icon onClick={() => select(selected - 1)}  src={backArrow} /> : <Placeholder/>}
+					{selected < sortedImageKeys.length - 1 ? (
+						<Icon onClick={() => select(selected + 1)} src={nextArrow} />
+					) : (
+						<Placeholder />
+					)}
+					{selected > 0 ? (
+						<Icon onClick={() => select(selected - 1)} src={backArrow} />
+					) : (
+						<Placeholder />
+					)}
 				</Control>
 			</Header>
-			
+
 			{images[selected]}
 			<ImgContainer>
 				<Image src={images[parseInt(sortedImageKeys[selected])]} />
 			</ImgContainer>
-			
 		</ContainerColumnRelative>
 	)
 }
@@ -104,5 +117,4 @@ const Control = styled.div`
 	width: 30%;
 	margin: 5%;
 	margin-bottom: 0;
-
 `

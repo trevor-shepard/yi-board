@@ -18,7 +18,11 @@ interface Props {
 	setError: Dispatch<SetStateAction<string>>
 }
 
-export default function Index({ id, setLoading, setError }: Props): ReactElement {
+export default function Index({
+	id,
+	setLoading,
+	setError
+}: Props): ReactElement {
 	const dispatch = useDispatch()
 	const [imageAsFile, setImageAsFile] = useState<null | File>(null)
 	// const [fileAsImage, setFileAsImage] = useState<null | string>(null)

@@ -18,7 +18,6 @@ interface Props {}
 export default function Index(): ReactElement {
 	const [newProject, setNewProject] = useState(false)
 	const { art } = useSelector((state: RootState) => state)
-
 	const pieces = Object.values(art).map(({ id, title, images }) => {
 		const mostRecentImageKey = Object.keys(images).sort(
 			(a, b) => parseInt(a) - parseInt(b)

@@ -32,14 +32,22 @@ export default function Index({ hide }: Props): ReactElement {
 	}
 
 	const handleSubmit = async () => {
+		
 		if (title === '') {
 			setError('please name your project')
 		} else if (imageAsFile === null) {
 			setError('please add a photo')
 		} else {
 			setLoading(true)
-			await dispatch(createArt(title, imageAsFile))
-			setLoading(false)
+			try {
+				await dispatch(createArt(title, imageAsFile))
+				hide()
+			} catch (error) {
+				setError(error.message)
+				setLoading(false)
+			}
+			
+			
 		}
 	}
 	return loading ? (
