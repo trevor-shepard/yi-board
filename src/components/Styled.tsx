@@ -2,8 +2,8 @@ import styled from '@emotion/styled'
 
 export const Container = styled.div`
 	position: relative;
-	height: 100vh;
-	width: 100vw;
+	height: 100%;
+	width: 100%;
 `
 
 export const ContainerColumnRelative = styled(Container)`
@@ -50,11 +50,12 @@ export const Thumb = styled.div`
 	width: 50px;
 	margin: 10%;
 	margin-top: 3%;
+	align-items: center;
 `
 
 export const ThumbImage = styled.img`
-	height: 40px;
-	width: 40px;
+	height: auto;
+	width: 100px;
 `
 
 export const ThumbTitle = styled.div`

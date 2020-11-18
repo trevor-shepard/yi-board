@@ -17,7 +17,7 @@ export default function Index({
 	const [error, setError] = useState('')
 
 	const sortedImageKeys = Object.keys(images).sort(
-		(a, b) => parseInt(b) - parseInt(a)
+		(a, b) => parseInt(a) - parseInt(b)
 	)
 	const Thumbs = sortedImageKeys.map((key: string, index) => (
 		<Thumb onClick={() => select(index)} key={`${title}-${key}`}>

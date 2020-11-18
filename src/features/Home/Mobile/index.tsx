@@ -21,7 +21,7 @@ export default function Index(): ReactElement {
 
 	const pieces = Object.values(art).map(({ id, title, images }) => {
 		const mostRecentImageKey = Object.keys(images).sort(
-			(a, b) => parseInt(b) - parseInt(a)
+			(a, b) => parseInt(a) - parseInt(b)
 		)[0]
 
 		const mostRecentImage = images[parseInt(mostRecentImageKey)]
