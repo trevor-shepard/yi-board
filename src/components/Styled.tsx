@@ -3,10 +3,6 @@ import styled from '@emotion/styled'
 import { ClipLoader, PuffLoader } from 'react-spinners'
 import { downloadIcon } from 'assets/icons'
 
-
-
-
-
 export const Container = styled.div`
 	position: relative;
 	height: 100%;

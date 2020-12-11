@@ -10,7 +10,7 @@ import { useWindowDimensions } from 'utils/windowUtils'
 import {
 	ContainerColumnRelative,
 	PageTitle,
-	ThumbImage,
+	LoadingImage,
 	ThumbTitle,
 	Add
 } from 'components/Styled'
@@ -38,7 +38,7 @@ export default function Index(): ReactElement {
 						}
 					}}
 				>
-					<ThumbImage src={mostRecentImage} />
+					<LoadingImage src={mostRecentImage} />
 				</Link>
 			</DragItemContainer>
 		)
