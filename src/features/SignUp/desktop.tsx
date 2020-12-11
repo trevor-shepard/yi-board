@@ -19,15 +19,7 @@ const SignUp: FunctionComponent = () => {
 		if (!username) return setError('Your Name (First Last) is required')
 		if (!email) return setError('Your Email is required')
 		if (password1 !== password2) return setError('passwords do not match')
-		dispatch(
-			signup(
-				
-					email,
-					username
-				,
-				password1
-			)
-		)
+		dispatch(signup(email, username, password1))
 	}
 
 	return (
@@ -102,7 +94,6 @@ const Left = styled.div`
 `
 
 const Right = styled.div``
-
 
 const Error = styled.div`
 	border-radius: 2px;

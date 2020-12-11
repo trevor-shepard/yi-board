@@ -53,26 +53,31 @@ export const fetchArt = (): AppThunk => async dispatch => {
 }
 
 export const subscribeToArts = (dispatch: Dispatch<any>, uid: string) => {
-	const unsubscribe = db.collection('arts').where('owner', '==', uid).onSnapshot(querySnapshot => {
-		const arts: { [id: string]: Art } = {}
+	const unsubscribe = db
+		.collection('arts')
+		.where('owner', '==', uid)
+		.onSnapshot(querySnapshot => {
+			const arts: { [id: string]: Art } = {}
 
-		querySnapshot.forEach(doc => {
-			const art = doc.data() as Art
-			arts[art.id] = art
+			querySnapshot.forEach(doc => {
+				const art = doc.data() as Art
+				arts[art.id] = art
+			})
+
+			dispatch(recieveArts(arts))
 		})
-
-		dispatch(recieveArts(arts))
-	})
 
 	return unsubscribe
 }
 
-export const createArt = (
-	title: string,
-	photo: File
-): AppThunk => async (dispatch, getState) => {
+export const createArt = (title: string, photo: File): AppThunk => async (
+	dispatch,
+	getState
+) => {
 	try {
-		const { user: {uid}} = getState()
+		const {
+			user: { uid }
+		} = getState()
 		const ref = await db.collection('arts').doc()
 
 		const date = parseInt(moment().format('X'))
@@ -120,8 +125,20 @@ export const addImage = (id: string, photo: File): AppThunk => async (
 		})
 }
 
+export const setDisplay = async (id: string, photoID: string) => {
+	try {
+		await db
+			.collection('arts')
+			.doc(id)
+			.update({
+				display: photoID
+			})
+	} catch (error) {
+		debugger
+	}
+}
+
 export const handleFireBaseUpload = async (path: string, photo: File) => {
-	console.log('start of upload')
 	if (photo === null)
 		throw Error(`not an image, the image file is a ${typeof photo}`)
 	const downloadURL = await storage
@@ -134,7 +151,6 @@ export const handleFireBaseUpload = async (path: string, photo: File) => {
 		})
 		.catch(error => {
 			const message = error.message
-			console.log(message)
 		})
 
 	return downloadURL

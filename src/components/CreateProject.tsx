@@ -32,7 +32,6 @@ export default function Index({ hide }: Props): ReactElement {
 	}
 
 	const handleSubmit = async () => {
-		
 		if (title === '') {
 			setError('please name your project')
 		} else if (imageAsFile === null) {
@@ -46,8 +45,6 @@ export default function Index({ hide }: Props): ReactElement {
 				setError(error.message)
 				setLoading(false)
 			}
-			
-			
 		}
 	}
 	return loading ? (
@@ -65,7 +62,10 @@ export default function Index({ hide }: Props): ReactElement {
 					label="title"
 				/>
 				<FileInputLabel>
-					<Image src={fileAsImage ? fileAsImage : camera_create} />
+					<Image
+						src={fileAsImage ? fileAsImage : camera_create}
+						icon={fileAsImage !== null}
+					/>
 					<FileInput id="upload" type="file" onChange={handleImageAsFile} />
 				</FileInputLabel>
 				<MarginButton onClick={handleSubmit}>submit</MarginButton>
@@ -83,8 +83,8 @@ const Exit = styled.img`
 	color: black;
 `
 
-const Image = styled.img`
-	width: 80%;
+const Image = styled.img<{ icon: boolean }>`
+	width: ${({ icon }) => (icon ? '80%' : '60%')};
 	height: auto;
 	border-radius: 100px;
 	object-fit: cover;

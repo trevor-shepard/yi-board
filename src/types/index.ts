@@ -6,6 +6,7 @@ export interface Art {
 	id: string
 	owner: string
 	observers: string[]
+	display?: string
 }
 
 export interface ArtState {

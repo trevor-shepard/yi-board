@@ -4,6 +4,7 @@ import './styles/index.css'
 import { Provider } from 'react-redux'
 import Home from 'features/Home'
 import Detail from 'features/Detail'
+import Profile from 'features/Profile'
 import Subscribe from 'components/Subscribe'
 import store from 'store'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
@@ -19,15 +20,15 @@ function App() {
 		<div className="App">
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
-						<Router>
-							<ProtectedRoute component={Subscribe} />
-							<Switch>
-								<AuthRoute path="/signup" component={SignUp} />
-								<ProtectedRoute exact path="/detail" component={Detail} />
-								<ProtectedRoute path="/" component={Home} />
-							</Switch>
-						</Router>
-					
+					<Router>
+						<ProtectedRoute component={Subscribe} />
+						<Switch>
+							<AuthRoute path="/signup" component={SignUp} />
+							<ProtectedRoute exact path="/detail" component={Detail} />
+							<ProtectedRoute exact path="/profile" component={Profile} />
+							<ProtectedRoute path="/" component={Home} />
+						</Switch>
+					</Router>
 				</PersistGate>
 			</Provider>
 		</div>

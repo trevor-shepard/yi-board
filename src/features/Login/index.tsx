@@ -14,7 +14,7 @@ const Login: FunctionComponent = () => {
 
 	return (
 		<Container>
-			<Header>Welcome to Incubate-me</Header>
+			<Header>Welcome to Progress Board</Header>
 
 			<Input
 				placeholder={'Email'}
@@ -51,6 +51,7 @@ const Container = styled.div`
 	margin-left: auto;
 	margin-right: auto;
 	top: 10%;
+	border-radius: 5px;
 `
 
 const Header = styled.div`
@@ -64,6 +65,7 @@ const Header = styled.div`
 	width: 100%;
 	padding: 16px;
 	margin-top: 20px;
+	width: max-content;
 `
 
 const Input = styled.input`

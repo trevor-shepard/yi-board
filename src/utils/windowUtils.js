@@ -24,3 +24,28 @@ export function useWindowDimensions() {
 
 	return windowDimensions
 }
+
+export const useDeviceOrientation = () => {
+	const [isLandscape, setIsLandscape] = useState(false)
+
+	useEffect(() => {
+		const mql = window.matchMedia('(orientation: landscape)')
+		screenTest(mql)
+		// Listen to device orientation change
+		mql.addListener(screenTest)
+		// Unbind event listeners
+		return () => {
+			mql.removeListener(screenTest)
+		}
+	}, [isLandscape])
+
+	const screenTest = e => {
+		if (e.matches) {
+			setIsLandscape(true)
+		} else {
+			setIsLandscape(false)
+		}
+	}
+
+	return isLandscape
+}
