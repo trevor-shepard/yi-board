@@ -1,6 +1,6 @@
 import React, { ReactElement, useRef, ReactChild } from 'react'
 import { range } from 'lodash'
-import { interpolate, useSprings, animated as a } from 'react-spring'
+import { to, useSprings, animated as a } from 'react-spring'
 import { useGesture } from 'react-use-gesture'
 import { clamp } from 'lodash'
 import styled from '@emotion/styled'
@@ -92,7 +92,9 @@ export default function Index({
 	}
 
 	const bind = useGesture({
-		onDrag: ({ args: [originalIndex], down, movement: [deltaX, deltaY] }) => {
+		onDrag: ({ args: [originalIndex], down, movement: [deltaX, deltaY], xy: [mousex, mousey] }) => {
+			console.log('movement', deltaX, deltaY)
+			console.log('mouse', mousex, mousey)
 			const curIndex = order.current.indexOf(originalIndex)
 			const [initialX, initialY] = layout[curIndex]
 			const [x, y] = [initialX + deltaX, initialY + deltaY]
@@ -120,8 +122,8 @@ export default function Index({
 			)
 			if (!down) order.current = newOrder
 		},
-		// @ts-ignore
-		gestureConfig
+		// // @ts-ignore
+		// gestureConfig
 	})
 
 	return (
@@ -133,7 +135,7 @@ export default function Index({
 					style={{
 						// @ts-ignore
 						zIndex,
-						transform: interpolate(
+						transform: to(
 							[x, y, scale],
 							(x, y, s) => `translate3d(${x}px,${y}px,0) scale(${s})`
 						)

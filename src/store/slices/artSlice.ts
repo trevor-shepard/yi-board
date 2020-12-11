@@ -150,7 +150,7 @@ export const handleFireBaseUpload = async (path: string, photo: File) => {
 			return (await storage.ref(path).getDownloadURL()) as string
 		})
 		.catch(error => {
-			const message = error.message
+			// const message = error.message
 		})
 
 	return downloadURL
