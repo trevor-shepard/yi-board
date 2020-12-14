@@ -2,7 +2,6 @@ import React, { useState, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
-import { Link } from 'react-router-dom'
 // import { add_round } from 'assets/icons'
 import CreateProject from 'components/CreateProject'
 import DraggableList from 'components/DraggableGrid'
@@ -39,7 +38,7 @@ export default function Index(): ReactElement {
 	return newProject === false ? (
 		<DesktopContainer>
 			<Left>
-				<PageTitle>Projects</PageTitle>
+				<MarginTopTitle>Projects</MarginTopTitle>
 				<DraggableList
 					items={pieces}
 					rowSize={3}
@@ -83,7 +82,6 @@ const Divider = styled.div`
 `
 
 const DesktopContainer = styled.div`
-
 	height: 100%;
 	width: 100%;
 	display: flex;
@@ -91,4 +89,8 @@ const DesktopContainer = styled.div`
 	justify-content: space-between;
 	align-items: center;
 
+`
+
+const MarginTopTitle = styled(PageTitle)`
+	margin-bottom: 6%;
 `

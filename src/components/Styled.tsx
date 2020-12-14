@@ -129,7 +129,6 @@ export const ThumbTitle = styled.div`
 export const ThumbList = styled.div`
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
 	flex-wrap: wrap;
 	overflow-y: scroll;
 `

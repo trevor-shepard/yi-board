@@ -149,6 +149,7 @@ const Control = styled.div<{ landscape: boolean }>`
 	width: 30%;
 	margin: ${({ landscape }) => (landscape ? '2%' : '5%')};
 	margin-bottom: 0;
+	align-items: center;
 `
 const ArtThumbTitle = styled(ThumbTitle)<{ display: boolean }>`
 	/* border: 2px solid ${({ display }) =>

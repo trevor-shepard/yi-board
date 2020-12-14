@@ -1,16 +1,14 @@
-import React, { useState, ReactElement } from 'react'
+import React, { useState, ReactElement, useRef, useLayoutEffect } from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { ClipLoader } from 'react-spinners'
-import { useDeviceOrientation } from 'utils/windowUtils'
 import { Art } from 'types'
 import { setDisplay } from 'store/slices/artSlice'
 import { backArrow, nextArrow, x } from 'assets/icons'
 import {
 	Thumb,
 	PageTitle,
-	LandscapePageTitle,
 	ThumbList,
 	LoadingImage,
 	ThumbTitle,
@@ -32,13 +30,14 @@ export default function Index({
 	const [error, setError] = useState('')
 	const [clickDown, setClickDown] = useState(moment())
 	const [clicked, setClicked] = useState<null | string>()
-	const isLandscape = useDeviceOrientation()
 	const sortedImageKeys = Object.keys(images).sort(
 		(a, b) => parseInt(b) - parseInt(a)
 	)
 
+	
+
 	const Thumbs = sortedImageKeys.map((key: string, index) => (
-		<Thumb
+		<DesktopThumb
 			key={`${title}-${key}`}
 			onMouseDown={() => {
 				const duration = moment().diff(clickDown, 'seconds')
@@ -58,11 +57,10 @@ export default function Index({
 			onClick={e => e.stopPropagation()}
 		>
 			<ArtThumbTitle display={display ? key === display : false}>
-				{' '}
 				{index + 1}
 			</ArtThumbTitle>
 			<LoadingImage src={images[parseInt(key)]} />
-		</Thumb>
+		</DesktopThumb>
 	))
 
 	if (loading)
@@ -86,10 +84,8 @@ export default function Index({
 	) : (
 		<ContainerFlexColumnAlignCenter>
 			<Header>
-				
 				<PageTitle>{title}</PageTitle>
-				
-				<Control landscape={isLandscape}>
+				<Control >
 					<Icon onClick={() => select(null)} src={x} />
 					{selected < sortedImageKeys.length - 1 ? (
 						<Icon onClick={() => select(selected + 1)} src={nextArrow} />
@@ -105,17 +101,41 @@ export default function Index({
 				</Control>
 			</Header>
 			{images[selected]}
-			<Image
-				landscape={isLandscape}
+			<ResponsiveImage
 				src={images[parseInt(sortedImageKeys[selected])]}
 			/>
 		</ContainerFlexColumnAlignCenter>
 	)
 }
 
+function ResponsiveImage({ src} : {src: string}): ReactElement {
+	const ref = useRef<HTMLImageElement>(null)
+	const [isImageLandscape, setIsImageLandscape] = useState(false)
+	useLayoutEffect(() => {
+		const current = ref.current
+		if (current) {
+			const height = current.clientHeight
+			const width = current.clientWidth
+
+			if (width > height) setIsImageLandscape(true)
+		}
+		
+	}, [])
+
+	return <Image
+		ref={ref}
+		landscape={isImageLandscape}
+		src={src}
+	/>
+
+}
+
+
+
 const Image = styled.img<{ landscape: boolean }>`
-	width: auto;
-	height: 95%;
+	width: ${({landscape}) => landscape ? '95%' : 'auto'};
+	height: ${({landscape}) => landscape ?  'auto' : '90%' };
+	${({landscape}) => landscape && 'margin-top: 15%;' }
 `
 const Icon = styled.img`
 	height: 20px;
@@ -139,16 +159,19 @@ const Header = styled.div`
 	width: 100%;
 `
 
-const Control = styled.div<{ landscape: boolean }>`
+const Control = styled.div`
 	display: flex;
 	flex-direction: row-reverse;
 	justify-content: space-around;
 	width: 30%;
-	margin: ${({ landscape }) => (landscape ? '2%' : '5%')};
+	margin: 5%;
 	margin-bottom: 0;
+	align-items: center;
 `
 const ArtThumbTitle = styled(ThumbTitle)<{ display: boolean }>`
-	/* border: 2px solid ${({ display }) =>
-		display ? ' #E2BB41' : 'transparent'}; */
 	color: ${({ display }) => (display ? ' #E2BB41' : 'black')};
+`
+
+const DesktopThumb = styled(Thumb)`
+	margin: 6%
 `

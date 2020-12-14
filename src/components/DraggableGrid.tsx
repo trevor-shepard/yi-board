@@ -84,12 +84,12 @@ export default function Index({
 		}
 	})
 
-	const gestureConfig = {
-		drag: {
-			filterTaps: true,
-			rubberband: true
-		}
-	}
+	// const gestureConfig = {
+	// 	drag: {
+	// 		filterTaps: true,
+	// 		rubberband: true
+	// 	}
+	// }
 
 	const bind = useGesture({
 		onDrag: ({ args: [originalIndex], down, movement: [deltaX, deltaY], xy: [mousex, mousey] }) => {
