@@ -50,7 +50,7 @@ export default function Index({ hide }: Props): ReactElement {
 	return loading ? (
 		<>loading</>
 	) : (
-		<ContainerColumnRelative>
+		<ContainerColumnRelative onClick={(e) => e.stopPropagation()}>
 			<Exit onClick={hide} src={x} />
 			<PageTitle>Start a New Project</PageTitle>
 			{error}

@@ -2,9 +2,10 @@ import React, { useState, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
-// import { add_round } from 'assets/icons'
+import { add_round } from 'assets/icons'
 import CreateProject from 'components/CreateProject'
 import DraggableList from 'components/DraggableGrid'
+import PopUpModal from './PopUpModal'
 import Detail from 'features/Detail/Desktop'
 import { useWindowDimensions } from 'utils/windowUtils'
 import {
@@ -35,7 +36,7 @@ export default function Index(): ReactElement {
 		)
 	})
 
-	return newProject === false ? (
+	return  (
 		<DesktopContainer>
 			<Left>
 				<MarginTopTitle>Projects</MarginTopTitle>
@@ -46,17 +47,18 @@ export default function Index(): ReactElement {
 					colWidth={(windowWidth / 2) / 3}
 					padding={windowWidth * 0.03}
 				/>
+				<PopUpModal show={newProject} hide={() => setNewProject(false)} />
+
+				<Add onClick={() => setNewProject(true)} src={add_round} />
 			</Left>
 			<Divider /> 
 			<Right>
 				{ selected && <Detail project={art[selected]} />}
 			</Right>
-
-			{/* <Add onClick={() => setNewProject(true)} src={add_round} /> */}
 		</DesktopContainer>
-	) : (
-		<CreateProject hide={() => setNewProject(false)} />
-	)
+	) 
+		
+	
 }
 
 const DragItemContainer = styled.div<{ width: number }>`
@@ -74,6 +76,7 @@ const Left = styled.div`
 const Right = styled.div`
 	width: 48%;
 	height: 100%;
+	position: relative;
 `
 const Divider = styled.div`
 	width: 1px;
@@ -88,9 +91,16 @@ const DesktopContainer = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	
 
 `
 
 const MarginTopTitle = styled(PageTitle)`
 	margin-bottom: 6%;
+`
+
+export const Add = styled.img`
+	position: absolute;
+	bottom: 10%;
+	right: 10%;
 `
